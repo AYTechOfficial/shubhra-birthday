@@ -1,0 +1,11 @@
+# Vercel CLI
+.vercel
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Local editor / agent metadata
+.DS_Store
+Thumbs.db
+.freebuff/

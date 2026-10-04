@@ -1,0 +1,6 @@
+# Normalize line endings so diffs stay readable across Windows and Linux checkouts.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.webp binary
