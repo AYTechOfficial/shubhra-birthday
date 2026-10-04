@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shubhra • Celestial Birthday Odyssey • October 5</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700;900&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Three.js + GSAP + Confetti CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      user-select: none;
+      -webkit-user-select: none;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(223, 183, 108, 0.4) transparent;
+    }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #04060f;
+      color: #FAF8F5;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .font-serif-title {
+      font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+    }
+    .champagne-glow {
+      text-shadow: 0 0 20px rgba(223, 183, 108, 0.6), 0 0 40px rgba(223, 183, 108, 0.3);
+    }
+    .glass-panel {
+      background: rgba(11, 16, 38, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(223, 183, 108, 0.35);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+</head>
+<body class="relative w-screen h-screen overflow-hidden bg-[#04060f]">
+
+  <!-- 3D WebGL Canvas Container -->
+  <div id="canvas-container" class="absolute inset-0 z-0 cursor-crosshair"></div>
+
+  <!-- Starlight Cursor -->
+  <div id="custom-cursor" class="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 hidden md:block">
+    <div class="relative flex items-center justify-center">
+      <div class="w-7 h-7 rounded-full border border-[#DFB76C]/60 animate-ping opacity-30"></div>
+      <div class="absolute w-2 h-2 rounded-full bg-[#DFB76C] shadow-[0_0_14px_#DFB76C]"></div>
+    </div>
+  </div>
+
+  <!-- Welcome / Prologue Overlay -->
+  <div id="welcome-overlay" class="absolute inset-0 z-40 flex flex-col items-center justify-center bg-[#04060f]/85 backdrop-blur-xl px-6 text-center">
+    <div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#dfb76c_1px,transparent_1px)] [background-size:32px_32px]"></div>
+
+    <div class="max-w-xl w-full p-8 md:p-10 rounded-3xl glass-panel relative overflow-hidden">
+      <div class="absolute -top-24 -left-24 w-56 h-56 bg-[#DFB76C]/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-[#9D72FF]/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Monogram -->
+      <div class="inline-flex items-center justify-center w-12 h-12 mb-5 rounded-full border border-[#DFB76C]/60 bg-black/40 text-[#DFB76C] font-serif-title font-bold text-sm tracking-widest shadow-[0_0_20px_rgba(223,183,108,0.3)]">
+        S
+      </div>
+
+      <div class="flex items-center justify-center gap-2 mb-3 text-[#DFB76C] text-[11px] font-mono tracking-[0.35em] uppercase">
+        <span>✦ Celestial Alignment • October 5 ✦</span>
+      </div>
+
+      <h1 class="font-serif-title text-3xl md:text-5xl font-bold tracking-tight text-[#FAF8F5] mb-2 leading-tight champagne-glow">
+        Shubhra
+      </h1>
+
+      <p class="font-serif-title italic text-base md:text-lg text-[#DFB76C]/90 mb-6 tracking-wide">
+        The Celestial Birthday Odyssey
+      </p>
+
+      <div class="h-[1px] w-28 mx-auto bg-gradient-to-r from-transparent via-[#DFB76C]/80 to-transparent mb-6"></div>
+
+      <p class="text-sm md:text-base text-[#FAF8F5]/80 font-light leading-relaxed mb-8 max-w-md mx-auto">
+        An AAA photorealistic universe sculpted in celebration of your brilliance.
+        Awaken the October 5 astronomical chronometers, unseal the starlight monolith, 
+        and make an eternal wish upon the ceremonial altar serenaded by acoustic melodies.
+      </p>
+
+      <button id="start-btn" class="group relative inline-flex items-center justify-center px-9 py-3.5 text-xs font-semibold tracking-[0.25em] text-[#04060f] uppercase transition-all duration-300 rounded-full bg-gradient-to-r from-[#DFB76C] via-[#F3CE85] to-[#DFB76C] hover:shadow-[0_0_30px_rgba(223,183,108,0.6)] hover:scale-105 active:scale-95">
+        <span>Begin Odyssey</span>
+      </button>
+
+      <div class="mt-7 flex items-center justify-center gap-5 text-[11px] text-[#FAF8F5]/45 font-mono">
+        <span>✦ Studio Acoustic Audio</span>
+        <span>✦ Haute Pâtisserie Cake</span>
+        <span>✦ 60 FPS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent HUD Header -->
+  <header id="main-hud" class="absolute top-0 left-0 right-0 z-30 hidden items-center justify-between px-6 py-4 pointer-events-none">
+    <div class="flex items-center gap-3 pointer-events-auto">
+      <div class="flex flex-col">
+        <span class="font-serif-title text-base md:text-lg font-bold tracking-wide text-[#FAF8F5] flex items-center gap-2">
+          Shubhra
+          <span class="text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-[#DFB76C]/40 text-[#DFB76C] bg-black/40">
+            Oct 5
+          </span>
+        </span>
+        <span id="chapter-label" class="text-[11px] font-mono tracking-wider text-[#FAF8F5]/50">
+          Chapter 1: Astronomical Chronometer
+        </span>
+      </div>
+    </div>
+
+    <!-- Quick Action Toolbar -->
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <button id="audio-toggle" class="p-2.5 rounded-full border border-[#DFB76C]/30 bg-[#0B1026]/70 backdrop-blur-md text-[#FAF8F5]/80 hover:text-[#DFB76C] hover:border-[#DFB76C] transition-colors" title="Toggle Sound">
+        🔊
+      </button>
+      <button id="camera-btn" class="p-2.5 rounded-full border border-[#DFB76C]/30 bg-[#0B1026]/70 backdrop-blur-md text-[#FAF8F5]/80 hover:text-[#DFB76C] hover:border-[#DFB76C] transition-colors hidden sm:flex" title="Capture Souvenir Postcard">
+        📷
+      </button>
+      <button id="replay-btn" class="p-2.5 rounded-full border border-[#DFB76C]/30 bg-[#0B1026]/70 backdrop-blur-md text-[#FAF8F5]/80 hover:text-[#DFB76C] hover:border-[#DFB76C] transition-colors" title="Replay Odyssey">
+        ↺
+      </button>
+    </div>
+  </header>
+
+  <!-- Bottom Chapter Action Card -->
+  <div id="bottom-card-container" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 w-full max-w-xl px-4 pointer-events-none hidden">
+    <div id="bottom-card" class="p-5 md:p-6 rounded-3xl glass-panel pointer-events-auto flex flex-col items-center text-center">
+      <!-- Injected via JavaScript based on Chapter -->
+    </div>
+  </div>
+
+  <!-- Wish Modal -->
+  <div id="wish-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+    <div class="relative w-full max-w-lg p-6 md:p-8 rounded-3xl glass-panel text-center overflow-hidden">
+      <button id="close-wish-modal" class="absolute top-4 right-4 text-white/50 hover:text-white p-2">✕</button>
+      <div id="wish-badge" class="inline-block px-3.5 py-1 mb-4 rounded-full border border-[#DFB76C]/40 text-[#DFB76C] text-xs font-mono uppercase tracking-widest bg-black/40"></div>
+      <h3 id="wish-title" class="font-serif-title text-2xl md:text-3xl font-bold text-[#FAF8F5] mb-2"></h3>
+      <p id="wish-quote" class="font-serif-title italic text-sm md:text-base text-[#DFB76C] mb-6"></p>
+      <div class="h-[1px] w-24 mx-auto bg-gradient-to-r from-transparent via-[#DFB76C]/60 to-transparent mb-6"></div>
+      <p id="wish-message" class="text-sm md:text-base text-[#FAF8F5]/85 leading-relaxed font-light mb-8"></p>
+      <button id="cherish-btn" class="px-8 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#DFB76C] text-[#04060f] hover:bg-[#F3CE85] transition-all">
+        Cherish Wish
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const WISH_CARDS = [
+      {
+        id: 1,
+        title: "The Luminary",
+        badge: "October 5 • Star",
+        quote: "Some people don't just enter a room; they bring the first light of dawn with them.",
+        message: "Shubhra, your intellect, effortless warmth, and quiet strength illuminate everyone fortunate enough to know you. May your upcoming year shine brighter than the most luminous constellations in the cosmos."
+      },
+      {
+        id: 2,
+        title: "The Visionary",
+        badge: "Infinite Horizon",
+        quote: "Destiny belongs to those whose imagination becomes reality's architecture.",
+        message: "May this next chapter unfold with daring adventures, groundbreaking triumphs, and the serene joy of seeing your highest aspirations materialize. You were crafted for profound greatness."
+      },
+      {
+        id: 3,
+        title: "The Heart of Gold",
+        badge: "Pure Grace",
+        quote: "True elegance is the gentle kindness that lingers long after you have left.",
+        message: "Thank you for the boundless sincerity, contagious laughter, and authentic grace you gift to the world every single day. Wishing you immeasurable peace, fulfillment, and joyous surprises."
+      },
+      {
+        id: 4,
+        title: "The Cosmic Alignment",
+        badge: "Born October 5",
+        quote: "On October 5, the heavens composed an enduring masterpiece.",
+        message: "Celebrating an extraordinary soul who elevates everything and everyone around her. May boundless health, sparkling laughter, and serendipity accompany every step of your journey."
+      },
+      {
+        id: 5,
+        title: "The Grand Tomorrow",
+        badge: "Limitless Skies",
+        quote: "Every extinguished flame is a constellation of wishes taking flight.",
+        message: "Blow out the candles, make your wildest wish without hesitation, and watch the universe conspire to bring it to life. Happy Birthday, Shubhra!"
+      }
+    ];
+
+    const HAPPY_BIRTHDAY_NOTES = [
+      { note: 392.00, dur: 0.35, pause: 0.1 },
+      { note: 392.00, dur: 0.35, pause: 0.1 },
+      { note: 440.00, dur: 0.7, pause: 0.1 },
+      { note: 392.00, dur: 0.7, pause: 0.1 },
+      { note: 523.25, dur: 0.7, pause: 0.1 },
+      { note: 493.88, dur: 1.2, pause: 0.2 },
+
+      { note: 392.00, dur: 0.35, pause: 0.1 },
+      { note: 392.00, dur: 0.35, pause: 0.1 },
+      { note: 440.00, dur: 0.7, pause: 0.1 },
+      { note: 392.00, dur: 0.7, pause: 0.1 },
+      { note: 587.33, dur: 0.7, pause: 0.1 },
+      { note: 523.25, dur: 1.2, pause: 0.2 },
+
+      { note: 392.00, dur: 0.35, pause: 0.1 },
+      { note: 392.00, dur: 0.35, pause: 0.1 },
+      { note: 783.99, dur: 0.7, pause: 0.1 },
+      { note: 659.25, dur: 0.7, pause: 0.1 },
+      { note: 523.25, dur: 0.7, pause: 0.1 },
+      { note: 493.88, dur: 0.7, pause: 0.1 },
+      { note: 440.00, dur: 1.1, pause: 0.2 },
+
+      { note: 698.46, dur: 0.35, pause: 0.1 },
+      { note: 698.46, dur: 0.35, pause: 0.1 },
+      { note: 659.25, dur: 0.7, pause: 0.1 },
+      { note: 523.25, dur: 0.7, pause: 0.1 },
+      { note: 587.33, dur: 0.7, pause: 0.1 },
+      { note: 523.25, dur: 1.4, pause: 0.3 }
+    ];
+
+    // -------------------------------------------------------------
+    // Studio-Grade Acoustic Sound Engine
+    // -------------------------------------------------------------
+    let audioCtx = null;
+    let isMuted = false;
+    let chordNodes = [];
+    let melodyTimeouts = [];
+
+    function initAudio() {
+      if (audioCtx) return;
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContextClass();
+
+        const masterFilter = audioCtx.createBiquadFilter();
+        masterFilter.type = 'lowpass';
+        masterFilter.frequency.setValueAtTime(3800, audioCtx.currentTime);
+
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+        masterFilter.connect(masterGain);
+        masterGain.connect(audioCtx.destination);
+
+        const baseFreqs = [110, 164.81, 220, 277.18, 329.63, 440];
+        baseFreqs.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const oscGain = audioCtx.createGain();
+
+          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+          const lfo = audioCtx.createOscillator();
+          const lfoGain = audioCtx.createGain();
+          lfo.frequency.setValueAtTime(0.08 + idx * 0.02, audioCtx.currentTime);
+          lfoGain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+          lfo.connect(lfoGain);
+
+          oscGain.gain.setValueAtTime(0.035 / (idx + 1), audioCtx.currentTime);
+          lfoGain.connect(oscGain.gain);
+
+          osc.connect(oscGain);
+          oscGain.connect(masterFilter);
+          osc.start();
+          lfo.start();
+
+          chordNodes.push(oscGain);
+        });
+      } catch (e) {
+        console.warn('Audio initialization error:', e);
+      }
+    }
+
+    function toggleAudio() {
+      playHapticClick();
+      if (!audioCtx) {
+        initAudio();
+        return;
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      isMuted = !isMuted;
+      document.getElementById('audio-toggle').textContent = isMuted ? '🔇' : '🔊';
+      chordNodes.forEach(g => {
+        g.gain.setTargetAtTime(isMuted ? 0 : 0.035, audioCtx.currentTime, 0.2);
+      });
+    }
+
+    function playHapticClick() {
+      if (isMuted || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1400, audioCtx.currentTime);
+        filter.Q.setValueAtTime(3.5, audioCtx.currentTime);
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.025);
+
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.028);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.03);
+      } catch (_) {}
+    }
+
+    function playMusicBoxNote(freq, duration = 0.8) {
+      if (isMuted || !audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const harmonics = [1.0, 2.76, 5.4];
+        const gains = [0.15, 0.05, 0.02];
+
+        harmonics.forEach((ratio, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq * ratio, now);
+
+          gain.gain.setValueAtTime(gains[i], now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + duration * (1 - i * 0.25));
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + duration + 0.05);
+        });
+      } catch (_) {}
+    }
+
+    function playHappyBirthdayMelody() {
+      if (!audioCtx) initAudio();
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+
+      melodyTimeouts.forEach(t => clearTimeout(t));
+      melodyTimeouts = [];
+
+      let currentDelay = 0;
+      HAPPY_BIRTHDAY_NOTES.forEach(item => {
+        const t = setTimeout(() => {
+          playMusicBoxNote(item.note, item.dur);
+        }, currentDelay * 1000);
+        melodyTimeouts.push(t);
+        currentDelay += item.dur + item.pause;
+      });
+    }
+
+    function playCandleBlow() {
+      if (isMuted || !audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const bufferSize = audioCtx.sampleRate * 0.35;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.09));
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1200, now);
+        filter.frequency.exponentialRampToValueAtTime(140, now + 0.35);
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+        noise.start(now);
+      } catch (_) {}
+    }
+
+    function playFireworkResonance() {
+      if (isMuted || !audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(85, now);
+        osc.frequency.exponentialRampToValueAtTime(26, now + 0.85);
+
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.92);
+
+        setTimeout(() => playMusicBoxNote(784 + Math.random() * 320, 1.2), 120);
+      } catch (_) {}
+    }
+
+    // -------------------------------------------------------------
+    // Canvas Textures: Stars, Spikes, Nebulae, and Cake Velvet Spray
+    // -------------------------------------------------------------
+    function createStarAiryDiskTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128;
+      canvas.height = 128;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      grad.addColorStop(0.15, 'rgba(255, 245, 210, 0.9)');
+      grad.addColorStop(0.4, 'rgba(223, 183, 108, 0.35)');
+      grad.addColorStop(0.75, 'rgba(157, 114, 255, 0.08)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 128, 128);
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function createDiffractionSpikeTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+
+      const drawSpike = (angle) => {
+        ctx.save();
+        ctx.translate(128, 128);
+        ctx.rotate(angle);
+
+        const grad = ctx.createLinearGradient(-128, 0, 128, 0);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        grad.addColorStop(0.35, 'rgba(255, 230, 160, 0.25)');
+        grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.95)');
+        grad.addColorStop(0.65, 'rgba(255, 230, 160, 0.25)');
+        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(-128, -1.2, 256, 2.4);
+        ctx.restore();
+      };
+
+      drawSpike(0);
+      drawSpike(Math.PI / 2);
+
+      ctx.save();
+      ctx.translate(128, 128);
+      const grad45 = ctx.createRadialGradient(0, 0, 0, 0, 0, 60);
+      grad45.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+      grad45.addColorStop(0.2, 'rgba(223, 183, 108, 0.4)');
+      grad45.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad45;
+      ctx.beginPath();
+      ctx.arc(0, 0, 60, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function createNebulaCloudTexture(colorHex) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createRadialGradient(256, 256, 20, 256, 256, 250);
+      grad.addColorStop(0, colorHex);
+      grad.addColorStop(0.4, 'rgba(11, 16, 38, 0.45)');
+      grad.addColorStop(0.8, 'rgba(4, 6, 15, 0.15)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 512);
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function createVelvetSprayTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#f9f6ef';
+      ctx.fillRect(0, 0, 512, 512);
+
+      for (let i = 0; i < 9000; i++) {
+        const x = Math.random() * 512;
+        const y = Math.random() * 512;
+        const r = Math.random() * 1.8 + 0.4;
+        const brightness = Math.random();
+        ctx.fillStyle = brightness > 0.65 
+          ? 'rgba(255, 255, 255, 0.55)' 
+          : brightness > 0.3 
+          ? 'rgba(232, 222, 204, 0.45)' 
+          : 'rgba(215, 200, 178, 0.35)';
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (let j = 0; j < 160; j++) {
+        const gx = Math.random() * 512;
+        const gy = Math.random() * 512;
+        ctx.fillStyle = 'rgba(223, 183, 108, 0.85)';
+        ctx.beginPath();
+        ctx.ellipse(gx, gy, Math.random() * 3.5 + 1.2, Math.random() * 2 + 0.6, Math.random() * Math.PI, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(3, 3);
+      return texture;
+    }
+
+    // -------------------------------------------------------------
+    // Three.js Scene Setup (Photorealistic Physical Materials)
+    // -------------------------------------------------------------
+    const container = document.getElementById('canvas-container');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x04060f, 0.009);
+
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 1000);
+    camera.position.set(0, 1.8, 12.5);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.35;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    // Studio Lighting
+    const ambientLight = new THREE.AmbientLight(0x1a2138, 1.4);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffeedb, 3.4);
+    keyLight.position.set(7, 16, 9);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
+    scene.add(keyLight);
+
+    const goldAccent = new THREE.PointLight(0xffd166, 3.8, 24);
+    goldAccent.position.set(0, 4.0, 0);
+    scene.add(goldAccent);
+
+    // Floor
+    const floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(70, 70),
+      new THREE.MeshStandardMaterial({ color: 0x050711, roughness: 0.22, metalness: 0.75 })
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -1.25;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    // Starfield & Astronomical Features
+    const airyDiskTex = createStarAiryDiskTexture();
+    const diffractionSpikeTex = createDiffractionSpikeTexture();
+
+    // 1) Nebulae
+    const nebulaeGroup = new THREE.Group();
+    scene.add(nebulaeGroup);
+
+    const nebulaColors = [
+      'rgba(147, 51, 234, 0.4)',
+      'rgba(59, 130, 246, 0.35)',
+      'rgba(223, 183, 108, 0.3)',
+      'rgba(236, 72, 153, 0.25)'
+    ];
+
+    nebulaColors.forEach((col, idx) => {
+      const nebTex = createNebulaCloudTexture(col);
+      const nebMat = new THREE.SpriteMaterial({
+        map: nebTex,
+        transparent: true,
+        opacity: 0.65,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      const sprite = new THREE.Sprite(nebMat);
+      sprite.scale.set(38, 38, 1);
+      const angle = (idx / nebulaColors.length) * Math.PI * 2;
+      sprite.position.set(Math.cos(angle) * 32, (idx - 1.5) * 8, -45 + Math.sin(angle) * 20);
+      nebulaeGroup.add(sprite);
+    });
+
+    // 2) Realistic Starfield
+    const starsCount = 4200;
+    const starGeometry = new THREE.BufferGeometry();
+    const starPositions = new Float32Array(starsCount * 3);
+    const starColors = new Float32Array(starsCount * 3);
+
+    const stellarPalette = [
+      new THREE.Color(0xb5d3ff),
+      new THREE.Color(0xffffff),
+      new THREE.Color(0xfff4e8),
+      new THREE.Color(0xffe29a),
+      new THREE.Color(0xffc585),
+      new THREE.Color(0xff9e9e)
+    ];
+
+    for (let i = 0; i < starsCount; i++) {
+      const radius = 22 + Math.random() * 95;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+
+      starPositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      starPositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      starPositions[i * 3 + 2] = radius * Math.cos(phi);
+
+      const color = stellarPalette[Math.floor(Math.random() * stellarPalette.length)];
+      starColors[i * 3] = color.r;
+      starColors[i * 3 + 1] = color.g;
+      starColors[i * 3 + 2] = color.b;
+    }
+
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+
+    const starfield = new THREE.Points(
+      starGeometry,
+      new THREE.PointsMaterial({
+        size: 0.35,
+        map: airyDiskTex,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.95,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      })
+    );
+    scene.add(starfield);
+
+    // 3) 4-Point Diffraction Spike Glints
+    const spikesGroup = new THREE.Group();
+    scene.add(spikesGroup);
+
+    const brightStarPositions = [
+      { x: -14, y: 12, z: -35, scale: 5.5, color: 0xffe29a },
+      { x: 16, y: 15, z: -38, scale: 6.2, color: 0xb5d3ff },
+      { x: -18, y: -8, z: -30, scale: 4.8, color: 0xffffff },
+      { x: 12, y: -12, z: -32, scale: 5.0, color: 0xffd166 },
+      { x: 0, y: 16, z: -28, scale: 7.0, color: 0xfffaf0 }
+    ];
+
+    brightStarPositions.forEach(b => {
+      const spike = new THREE.Sprite(new THREE.SpriteMaterial({
+        map: diffractionSpikeTex,
+        color: b.color,
+        transparent: true,
+        opacity: 0.88,
+        blending: THREE.AdditiveBlending
+      }));
+      spike.position.set(b.x, b.y, b.z);
+      spike.scale.set(b.scale, b.scale, 1);
+      spike.baseScale = b.scale;
+      spikesGroup.add(spike);
+    });
+
+    // 4) Floating Depth of Field Bokeh Dust
+    const dustCount = 180;
+    const dustGeom = new THREE.BufferGeometry();
+    const dustPos = new Float32Array(dustCount * 3);
+    for (let d = 0; d < dustCount; d++) {
+      dustPos[d * 3] = (Math.random() - 0.5) * 16;
+      dustPos[d * 3 + 1] = (Math.random() - 0.5) * 12 + 2;
+      dustPos[d * 3 + 2] = (Math.random() - 0.5) * 14 + 4;
+    }
+    dustGeom.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+    const bokehDust = new THREE.Points(
+      dustGeom,
+      new THREE.PointsMaterial({
+        size: 0.28,
+        map: airyDiskTex,
+        color: 0xffe29a,
+        transparent: true,
+        opacity: 0.65,
+        blending: THREE.AdditiveBlending
+      })
+    );
+    scene.add(bokehDust);
+
+    // Act 1: Chronometer Rings
+    const astrolabeGroup = new THREE.Group();
+    scene.add(astrolabeGroup);
+
+    const champagneGoldMat = new THREE.MeshPhysicalMaterial({
+      color: 0xdfb76c,
+      metalness: 0.92,
+      roughness: 0.16,
+      clearcoat: 0.85,
+      clearcoatRoughness: 0.08,
+      reflectivity: 0.95
+    });
+
+    const chronoRing1 = new THREE.Mesh(new THREE.TorusGeometry(3.3, 0.026, 24, 128), champagneGoldMat);
+    const chronoRing2 = new THREE.Mesh(new THREE.TorusGeometry(4.0, 0.034, 24, 144), champagneGoldMat);
+    const chronoRing3 = new THREE.Mesh(new THREE.TorusGeometry(4.8, 0.022, 24, 160), champagneGoldMat);
+
+    chronoRing1.rotation.x = Math.PI / 3;
+    chronoRing2.rotation.y = Math.PI / 4;
+    chronoRing3.rotation.z = Math.PI / 6;
+
+    astrolabeGroup.add(chronoRing1);
+    astrolabeGroup.add(chronoRing2);
+    astrolabeGroup.add(chronoRing3);
+
+    const constellationGroup = new THREE.Group();
+    astrolabeGroup.add(constellationGroup);
+
+    const nodeCoords = [
+      { x: -2.2, y: 1.4, z: 0 },
+      { x: -1.4, y: 2.2, z: 0.3 },
+      { x: -0.6, y: 1.2, z: -0.2 },
+      { x: 0.6, y: 1.5, z: 0.3 },
+      { x: 1.5, y: 2.2, z: -0.3 },
+      { x: 2.2, y: 1.1, z: 0.2 },
+      { x: 0, y: 0.3, z: 0.5 },
+      { x: -1.2, y: -0.8, z: 0.2 },
+      { x: 1.2, y: -0.8, z: -0.2 },
+      { x: 0, y: -1.8, z: 0.1 }
+    ];
+
+    const nodeMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      emissive: 0xffd166,
+      emissiveIntensity: 2.0,
+      roughness: 0.1
+    });
+
+    nodeCoords.forEach(coord => {
+      const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.13, 20, 20), nodeMat);
+      sphere.position.set(coord.x, coord.y, coord.z);
+      constellationGroup.add(sphere);
+    });
+
+    const linePoints = [];
+    nodeCoords.forEach(c => linePoints.push(new THREE.Vector3(c.x, c.y, c.z)));
+    linePoints.push(new THREE.Vector3(nodeCoords[0].x, nodeCoords[0].y, nodeCoords[0].z));
+    const constLine = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(linePoints),
+      new THREE.LineBasicMaterial({ color: 0xffd166, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending })
+    );
+    constellationGroup.add(constLine);
+
+    // Act 2: Celestial Monolith Gift Box
+    const giftGroup = new THREE.Group();
+    giftGroup.position.set(0, -0.2, 0);
+    giftGroup.visible = false;
+    scene.add(giftGroup);
+
+    const obsidianMat = new THREE.MeshPhysicalMaterial({
+      color: 0x0c1024,
+      metalness: 0.88,
+      roughness: 0.14,
+      clearcoat: 1.0
+    });
+
+    const baseBox = new THREE.Mesh(new THREE.BoxGeometry(2.3, 1.9, 2.3), obsidianMat);
+    giftGroup.add(baseBox);
+
+    const ribbonH = new THREE.Mesh(new THREE.BoxGeometry(2.35, 0.28, 2.35), champagneGoldMat);
+    const ribbonV = new THREE.Mesh(new THREE.BoxGeometry(0.28, 1.95, 2.35), champagneGoldMat);
+    giftGroup.add(ribbonH);
+    giftGroup.add(ribbonV);
+
+    const lidGroup = new THREE.Group();
+    lidGroup.position.set(0, 1.02, 0);
+    const lidMesh = new THREE.Mesh(new THREE.BoxGeometry(2.45, 0.38, 2.45), obsidianMat);
+    const lidBow = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.09, 20, 48), champagneGoldMat);
+    lidBow.rotation.x = Math.PI / 2;
+    lidBow.position.y = 0.32;
+    lidGroup.add(lidMesh);
+    lidGroup.add(lidBow);
+    giftGroup.add(lidGroup);
+
+    const crystalMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      emissive: 0xec4899,
+      emissiveIntensity: 1.8,
+      roughness: 0.04,
+      metalness: 0.08,
+      transmission: 0.88,
+      ior: 1.54,
+      thickness: 1.2,
+      transparent: true,
+      opacity: 0.98
+    });
+
+    const boxHeart = new THREE.Mesh(new THREE.OctahedronGeometry(0.72, 0), crystalMat);
+    boxHeart.position.set(0, 0.2, 0);
+    boxHeart.scale.set(0.01, 0.01, 0.01);
+    giftGroup.add(boxHeart);
+
+    // Act 3: Haute Pâtisserie Artisanal 3D Cake
+    const cakeGroup = new THREE.Group();
+    cakeGroup.position.set(0, -1.2, 0);
+    cakeGroup.visible = false;
+    scene.add(cakeGroup);
+
+    const velvetTex = createVelvetSprayTexture();
+    const velvetFondantMat = new THREE.MeshPhysicalMaterial({
+      map: velvetTex,
+      roughness: 0.42,
+      metalness: 0.02,
+      clearcoat: 0.25,
+      clearcoatRoughness: 0.35
+    });
+
+    const glossyGanacheMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      roughness: 0.08,
+      metalness: 0.1,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.04,
+      transmission: 0.2,
+      ior: 1.48
+    });
+
+    function createArtisanalBerry(x, y, z, isBlackberry) {
+      const berryGroup = new THREE.Group();
+      berryGroup.position.set(x, y, z);
+
+      const berryMat = new THREE.MeshPhysicalMaterial({
+        color: isBlackberry ? 0x241026 : 0xb91c1c,
+        emissive: isBlackberry ? 0x120815 : 0x7f1d1d,
+        emissiveIntensity: 0.4,
+        roughness: 0.12,
+        metalness: 0.05,
+        clearcoat: 1.0,
+        transmission: 0.15
+      });
+
+      const drupeGeom = new THREE.SphereGeometry(0.038, 8, 8);
+      for (let ring = 0; ring < 4; ring++) {
+        const count = ring === 0 ? 5 : ring === 1 ? 7 : ring === 2 ? 6 : 4;
+        const rad = 0.07 * (1 - ring * 0.18);
+        const ringY = ring * 0.045;
+        for (let k = 0; k < count; k++) {
+          const ang = (k / count) * Math.PI * 2 + ring * 0.4;
+          const dMesh = new THREE.Mesh(drupeGeom, berryMat);
+          dMesh.position.set(Math.cos(ang) * rad, ringY, Math.sin(ang) * rad);
+          berryGroup.add(dMesh);
+        }
+      }
+      cakeGroup.add(berryGroup);
+    }
+
+    function createFrenchMacaron(x, y, z, colorHex) {
+      const macGroup = new THREE.Group();
+      macGroup.position.set(x, y, z);
+      macGroup.rotation.y = Math.random() * Math.PI;
+
+      const shellMat = new THREE.MeshPhysicalMaterial({ color: colorHex, roughness: 0.28, clearcoat: 0.45 });
+      const fillingMat = new THREE.MeshStandardMaterial({ color: 0xfffaea, roughness: 0.35 });
+
+      const topShell = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.2, 0.08, 24), shellMat);
+      topShell.position.y = 0.06;
+      macGroup.add(topShell);
+
+      const filling = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.19, 0.05, 24), fillingMat);
+      macGroup.add(filling);
+
+      const botShell = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.18, 0.08, 24), shellMat);
+      botShell.position.y = -0.06;
+      macGroup.add(botShell);
+
+      cakeGroup.add(macGroup);
+    }
+
+    function createGanacheDrips(radius, y, count) {
+      const dripGeom = new THREE.SphereGeometry(0.06, 12, 12);
+      for (let i = 0; i < count; i++) {
+        const angle = (i / count) * Math.PI * 2;
+        const dripMesh = new THREE.Mesh(dripGeom, glossyGanacheMat);
+        const dripLen = 0.12 + Math.random() * 0.22;
+        dripMesh.position.set(Math.cos(angle) * (radius + 0.02), y - dripLen * 0.5, Math.sin(angle) * (radius + 0.02));
+        dripMesh.scale.set(0.8, dripLen * 3.8, 0.8);
+        cakeGroup.add(dripMesh);
+      }
+    }
+
+    // Tier 1
+    const tier1 = new THREE.Mesh(new THREE.CylinderGeometry(2.45, 2.45, 1.25, 64), velvetFondantMat);
+    tier1.position.y = 0.62;
+    cakeGroup.add(tier1);
+
+    const rim1 = new THREE.Mesh(new THREE.TorusGeometry(2.45, 0.08, 16, 72), champagneGoldMat);
+    rim1.rotation.x = Math.PI / 2;
+    rim1.position.y = 1.25;
+    cakeGroup.add(rim1);
+    createGanacheDrips(2.45, 1.25, 28);
+
+    const macaronColors = [0xdfb76c, 0xfbcfe8, 0xbbbf95, 0xfce7f3];
+    for (let m = 0; m < 14; m++) {
+      const angle = (m / 14) * Math.PI * 2;
+      createFrenchMacaron(Math.cos(angle) * 2.75, 0.1, Math.sin(angle) * 2.75, macaronColors[m % macaronColors.length]);
+    }
+
+    // Tier 2
+    const tier2 = new THREE.Mesh(new THREE.CylinderGeometry(1.75, 1.75, 1.05, 64), velvetFondantMat);
+    tier2.position.y = 1.75;
+    cakeGroup.add(tier2);
+
+    const rim2 = new THREE.Mesh(new THREE.TorusGeometry(1.75, 0.07, 16, 72), champagneGoldMat);
+    rim2.rotation.x = Math.PI / 2;
+    rim2.position.y = 2.27;
+    cakeGroup.add(rim2);
+    createGanacheDrips(1.75, 2.27, 20);
+
+    for (let b = 0; b < 10; b++) {
+      const angle = (b / 10) * Math.PI * 2 + 0.3;
+      createArtisanalBerry(Math.cos(angle) * 1.95, 1.28, Math.sin(angle) * 1.95, b % 3 === 0);
+    }
+
+    // Tier 3
+    const tier3 = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.1, 0.85, 48), velvetFondantMat);
+    tier3.position.y = 2.7;
+    cakeGroup.add(tier3);
+
+    const rim3 = new THREE.Mesh(new THREE.TorusGeometry(1.1, 0.06, 16, 56), champagneGoldMat);
+    rim3.rotation.x = Math.PI / 2;
+    rim3.position.y = 3.12;
+    cakeGroup.add(rim3);
+    createGanacheDrips(1.1, 3.12, 14);
+
+    const plateMesh = new THREE.Mesh(new THREE.CylinderGeometry(3.1, 2.9, 0.18, 64), champagneGoldMat);
+    plateMesh.position.y = 0.0;
+    cakeGroup.add(plateMesh);
+
+    // 3D Embossed Gold Script Topper
+    const topperCanvas = document.createElement('canvas');
+    topperCanvas.width = 1024;
+    topperCanvas.height = 340;
+    const tCtx = topperCanvas.getContext('2d');
+    tCtx.fillStyle = 'rgba(0,0,0,0)';
+    tCtx.fillRect(0, 0, 1024, 340);
+
+    tCtx.font = 'bold 64px "Playfair Display", Georgia, serif';
+    tCtx.textAlign = 'center';
+    tCtx.fillStyle = '#DFB76C';
+    tCtx.shadowColor = '#000000';
+    tCtx.shadowBlur = 12;
+    tCtx.fillText('Happy Birthday', 512, 130);
+
+    tCtx.font = 'italic bold 92px "Cinzel", Georgia, serif';
+    tCtx.fillStyle = '#FAF8F5';
+    tCtx.shadowColor = '#DFB76C';
+    tCtx.shadowBlur = 24;
+    tCtx.fillText('Shubhra', 512, 235);
+
+    const topperPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.3, 0.76),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.CanvasTexture(topperCanvas),
+        transparent: true,
+        side: THREE.DoubleSide
+      })
+    );
+    topperPlane.position.set(0, 4.25, 0);
+    cakeGroup.add(topperPlane);
+
+    // 5 Paraffin Wax Candles
+    const candleFlames = [];
+    const candleLights = [];
+    const candlePositions = [
+      { x: 0, z: 0 },
+      { x: 0.52, z: 0.42 },
+      { x: -0.52, z: 0.42 },
+      { x: 0.52, z: -0.42 },
+      { x: -0.52, z: -0.42 }
+    ];
+
+    const paraffinWaxMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      roughness: 0.16,
+      metalness: 0.05,
+      clearcoat: 0.4,
+      transmission: 0.25,
+      ior: 1.45
+    });
+
+    candlePositions.forEach((pos, idx) => {
+      const candle = new THREE.Group();
+      candle.position.set(pos.x, 3.12, pos.z);
+
+      const wax = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.82, 16), paraffinWaxMat);
+      wax.position.y = 0.41;
+      candle.add(wax);
+
+      const drip = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 8), paraffinWaxMat);
+      drip.position.set(0.06, 0.65, 0.04);
+      drip.scale.set(0.8, 1.8, 0.8);
+      candle.add(drip);
+
+      const wick = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.16, 8), new THREE.MeshBasicMaterial({ color: 0x1a1a1a }));
+      wick.position.y = 0.88;
+      candle.add(wick);
+
+      const flameGroup = new THREE.Group();
+      flameGroup.position.y = 1.05;
+
+      const blueBase = new THREE.Mesh(
+        new THREE.SphereGeometry(0.045, 12, 12),
+        new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending })
+      );
+      blueBase.position.y = -0.04;
+      blueBase.scale.set(1, 0.6, 1);
+      flameGroup.add(blueBase);
+
+      const innerFlameGeom = new THREE.ConeGeometry(0.075, 0.3, 16);
+      innerFlameGeom.translate(0, 0.15, 0);
+      const innerFlame = new THREE.Mesh(innerFlameGeom, new THREE.MeshBasicMaterial({ color: 0xfff3a3, transparent: true, opacity: 0.98 }));
+      flameGroup.add(innerFlame);
+
+      const outerGlowGeom = new THREE.SphereGeometry(0.13, 16, 16);
+      outerGlowGeom.scale(1, 1.9, 1);
+      const outerGlow = new THREE.Mesh(outerGlowGeom, new THREE.MeshBasicMaterial({ color: 0xff9900, transparent: true, opacity: 0.42, blending: THREE.AdditiveBlending }));
+      outerGlow.position.y = 0.12;
+      flameGroup.add(outerGlow);
+
+      flameGroup.candleIndex = idx;
+      flameGroup.isExtinguished = false;
+      candle.add(flameGroup);
+      candleFlames.push(flameGroup);
+
+      const cLight = new THREE.PointLight(0xffa726, 1.6, 4.5);
+      cLight.position.set(pos.x, 4.25, pos.z);
+      cakeGroup.add(cLight);
+      candleLights.push(cLight);
+
+      cakeGroup.add(candle);
+    });
+
+    // Act 4: Orbiting Wish Crystals
+    const wishingOrbs = [];
+    const orbGroup = new THREE.Group();
+    scene.add(orbGroup);
+
+    WISH_CARDS.forEach((card, i) => {
+      const angle = (i / WISH_CARDS.length) * Math.PI * 2;
+      const radius = 5.4;
+
+      const orbMesh = new THREE.Mesh(
+        new THREE.SphereGeometry(0.36, 28, 28),
+        new THREE.MeshPhysicalMaterial({
+          color: 0xffffff,
+          emissive: i % 2 === 0 ? 0xffd166 : 0xc084fc,
+          emissiveIntensity: 1.6,
+          roughness: 0.1,
+          metalness: 0.2,
+          clearcoat: 1.0
+        })
+      );
+      orbMesh.position.set(Math.cos(angle) * radius, 1.1 + Math.sin(angle * 2) * 0.4, Math.sin(angle) * radius);
+      orbMesh.wishIndex = i;
+      orbGroup.add(orbMesh);
+      wishingOrbs.push(orbMesh);
+    });
+
+    // Act 5: Fireworks
+    const fireworks = [];
+    function spawnFirework(x = 0, y = 5.2, z = -3) {
+      const pCount = 160;
+      const pGeom = new THREE.BufferGeometry();
+      const pPos = new Float32Array(pCount * 3);
+      const pVel = new Float32Array(pCount * 3);
+      const pColors = new Float32Array(pCount * 3);
+      const fwColor = stellarPalette[Math.floor(Math.random() * stellarPalette.length)];
+
+      for (let i = 0; i < pCount; i++) {
+        pPos[i * 3] = x;
+        pPos[i * 3 + 1] = y;
+        pPos[i * 3 + 2] = z;
+
+        const speed = 0.09 + Math.random() * 0.15;
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+
+        pVel[i * 3] = speed * Math.sin(phi) * Math.cos(theta);
+        pVel[i * 3 + 1] = speed * Math.sin(phi) * Math.sin(theta);
+        pVel[i * 3 + 2] = speed * Math.cos(phi);
+
+        pColors[i * 3] = fwColor.r;
+        pColors[i * 3 + 1] = fwColor.g;
+        pColors[i * 3 + 2] = fwColor.b;
+      }
+
+      pGeom.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      pGeom.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
+
+      const pSystem = new THREE.Points(
+        pGeom,
+        new THREE.PointsMaterial({ size: 0.22, map: airyDiskTex, vertexColors: true, transparent: true, opacity: 1, blending: THREE.AdditiveBlending })
+      );
+      scene.add(pSystem);
+      fireworks.push({ system: pSystem, velocities: pVel, age: 0 });
+      playFireworkResonance();
+    }
+
+    // Volumetric Curling Smoke
+    const smokeParticles = [];
+    function spawnSmoke(pos) {
+      const sCount = 28;
+      const sGeom = new THREE.BufferGeometry();
+      const sPos = new Float32Array(sCount * 3);
+      const sVels = [];
+
+      for (let i = 0; i < sCount; i++) {
+        sPos[i * 3] = pos.x + (Math.random() - 0.5) * 0.05;
+        sPos[i * 3 + 1] = pos.y + 0.95 + i * 0.02;
+        sPos[i * 3 + 2] = pos.z + (Math.random() - 0.5) * 0.05;
+
+        sVels.push({
+          x: (Math.random() - 0.5) * 0.015,
+          y: 0.035 + Math.random() * 0.025,
+          z: (Math.random() - 0.5) * 0.015,
+          curlFreq: 2 + Math.random() * 4
+        });
+      }
+
+      sGeom.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+      const sMat = new THREE.PointsMaterial({
+        color: 0xcccccc,
+        size: 0.12,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.NormalBlending
+      });
+      const sSystem = new THREE.Points(sGeom, sMat);
+      scene.add(sSystem);
+      smokeParticles.push({ system: sSystem, vels: sVels, age: 0 });
+    }
+
+    // -------------------------------------------------------------
+    // Experience Progression Logic
+    // -------------------------------------------------------------
+    let currentChapter = 1;
+    let isBoxOpened = false;
+    let candlesExtinguished = 0;
+
+    function renderChapterUI() {
+      const card = document.getElementById('bottom-card');
+      const label = document.getElementById('chapter-label');
+
+      if (currentChapter === 1) {
+        label.textContent = "Chapter 1: Astronomical Chronometer";
+        card.innerHTML = `
+          <div class="text-[10px] font-mono tracking-[0.3em] text-[#DFB76C] uppercase mb-1">Act I • Astronomical Chronometer</div>
+          <h2 class="font-serif-title text-lg md:text-xl font-semibold mb-2">Awaken the October 5 Stargate</h2>
+          <p class="text-xs md:text-sm text-[#FAF8F5]/70 max-w-md mb-4 leading-relaxed">
+            The celestial rings align once every year for Shubhra on October 5. Click below to unseal the monolith.
+          </p>
+          <button onclick="goToChapter(2)" class="px-7 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#DFB76C] text-[#04060f] hover:bg-[#F3CE85] transition-all">
+            Unseal Monolith →
+          </button>
+        `;
+      } else if (currentChapter === 2) {
+        label.textContent = "Chapter 2: Celestial Monolith";
+        card.innerHTML = `
+          <div class="text-[10px] font-mono tracking-[0.3em] text-[#DFB76C] uppercase mb-1">Act II • The Gift of Starlight</div>
+          <h2 class="font-serif-title text-lg md:text-xl font-semibold mb-2">
+            ${isBoxOpened ? "Dedicated to Shubhra" : "The Floating Celestial Monolith"}
+          </h2>
+          <p class="text-xs md:text-sm text-[#FAF8F5]/70 max-w-md mb-4 leading-relaxed">
+            ${isBoxOpened ? "Within the golden chambers shines a token of warmth, brilliance, and timeless elegance." : "Touch below to unseal the celestial gift box."}
+          </p>
+          ${!isBoxOpened 
+            ? `<button onclick="openGiftBox()" class="px-7 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-gradient-to-r from-[#DFB76C] to-[#F59E0B] text-[#04060f] hover:shadow-[0_0_25px_rgba(223,183,108,0.5)] transition-all">
+                🎁 Unseal Celestial Gift
+               </button>`
+            : `<button onclick="goToChapter(3)" class="px-7 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#DFB76C] text-[#04060f] hover:bg-[#F3CE85] transition-all">
+                Proceed to Cake Ceremony →
+               </button>`
+          }
+        `;
+      } else if (currentChapter === 3) {
+        label.textContent = "Chapter 3: Haute Pâtisserie Cake";
+        card.innerHTML = `
+          <div class="text-[10px] font-mono tracking-[0.3em] text-[#DFB76C] uppercase mb-1">Act III • Haute Pâtisserie Cake</div>
+          <h2 class="font-serif-title text-lg md:text-xl font-semibold mb-2">Make a Wish, Shubhra (${candlesExtinguished}/5 Extinguished)</h2>
+          <p class="text-xs md:text-sm text-[#FAF8F5]/70 max-w-md mb-3 leading-relaxed">
+            Admire the French artisanal cake crowned with fresh berries, macarons, and 24K gold! Listen to the celestial music box and blow out the candles.
+          </p>
+          <div class="flex items-center gap-2 mb-3">
+            <button onclick="playHappyBirthdayMelody()" class="px-4 py-1.5 rounded-full text-[11px] font-medium border border-[#DFB76C]/40 bg-black/40 text-[#DFB76C] hover:bg-[#DFB76C]/20 transition-all">
+              🎵 Replay Birthday Melody
+            </button>
+          </div>
+          ${candlesExtinguished < 5
+            ? `<button onclick="extinguishAllCandles()" class="px-7 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-gradient-to-r from-[#DFB76C] to-[#F59E0B] text-[#04060f] hover:shadow-[0_0_25px_rgba(223,183,108,0.5)] transition-all">
+                🔥 Make a Wish & Blow All
+               </button>`
+            : `<button onclick="goToChapter(4)" class="px-7 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#DFB76C] text-[#04060f] hover:bg-[#F3CE85] transition-all">
+                Explore Wishing Constellations →
+               </button>`
+          }
+        `;
+      } else if (currentChapter === 4) {
+        label.textContent = "Chapter 4: Wishing Constellation";
+        let tagsHtml = WISH_CARDS.map((w, idx) => `
+          <button onclick="openWish(${idx})" class="px-3.5 py-1.5 rounded-full text-[11px] font-medium border border-[#DFB76C]/30 bg-white/5 hover:bg-[#DFB76C]/20 transition-colors">
+            ✦ ${w.title}
+          </button>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="text-[10px] font-mono tracking-[0.3em] text-[#DFB76C] uppercase mb-1">Act IV • Orbiting Wishes</div>
+          <h2 class="font-serif-title text-lg md:text-xl font-semibold mb-2">5 Personalized Tributes to Shubhra</h2>
+          <p class="text-xs md:text-sm text-[#FAF8F5]/70 max-w-md mb-3 leading-relaxed">Click on any tribute to view its cosmic dedication.</p>
+          <div class="flex flex-wrap justify-center gap-2 mb-4">${tagsHtml}</div>
+          <button onclick="goToChapter(5)" class="px-7 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#DFB76C] text-[#04060f] hover:bg-[#F3CE85] transition-all">
+            Witness Grand Finale →
+          </button>
+        `;
+      } else if (currentChapter === 5) {
+        label.textContent = "Chapter 5: Starlight Symphony Finale";
+        card.innerHTML = `
+          <div class="text-[10px] font-mono tracking-[0.3em] text-[#DFB76C] uppercase mb-1">Act V • Starlight Symphony</div>
+          <h2 class="font-serif-title text-xl md:text-2xl font-bold text-[#DFB76C] mb-1">Happy Birthday, Shubhra!</h2>
+          <p class="text-xs text-[#FAF8F5]/80 font-light max-w-md mb-4 leading-relaxed">
+            May October 5 mark the dawn of your most radiant and triumphant chapter yet.
+          </p>
+          <div class="flex flex-wrap justify-center gap-3">
+            <button onclick="launchMoreFireworks()" class="px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-gradient-to-r from-[#DFB76C] to-[#F59E0B] text-[#04060f] hover:shadow-[0_0_20px_rgba(223,183,108,0.6)] transition-all">
+              ✨ Launch More Fireworks
+            </button>
+            <button onclick="captureSouvenir()" class="px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase border border-[#DFB76C]/60 text-[#DFB76C] hover:bg-[#DFB76C]/10 transition-all">
+              📷 Save Souvenir
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function goToChapter(num) {
+      playHapticClick();
+      currentChapter = num;
+      playMusicBoxNote(659.25, 1.2);
+
+      if (num === 1) {
+        astrolabeGroup.visible = true;
+        giftGroup.visible = false;
+        cakeGroup.visible = false;
+        gsap.to(camera.position, { x: 0, y: 1.8, z: 11.5, duration: 2.2, ease: 'power3.inOut' });
+      } else if (num === 2) {
+        astrolabeGroup.visible = false;
+        giftGroup.visible = true;
+        cakeGroup.visible = false;
+        gsap.to(camera.position, { x: 0, y: 1.4, z: 7.8, duration: 2.4, ease: 'power3.inOut' });
+      } else if (num === 3) {
+        astrolabeGroup.visible = false;
+        giftGroup.visible = false;
+        cakeGroup.visible = true;
+        gsap.to(camera.position, { x: 0, y: 2.9, z: 8.8, duration: 2.4, ease: 'power3.inOut' });
+        setTimeout(() => playHappyBirthdayMelody(), 600);
+      } else if (num === 4) {
+        astrolabeGroup.visible = false;
+        giftGroup.visible = true;
+        cakeGroup.visible = true;
+        gsap.to(camera.position, { x: 3.6, y: 3.2, z: 10.8, duration: 2.5, ease: 'power3.inOut' });
+      } else if (num === 5) {
+        astrolabeGroup.visible = true;
+        cakeGroup.visible = true;
+        giftGroup.visible = true;
+        gsap.to(camera.position, { x: 0, y: 3.1, z: 13.8, duration: 3.0, ease: 'power3.inOut' });
+
+        for (let k = 0; k < 8; k++) {
+          setTimeout(() => spawnFirework((Math.random() - 0.5) * 12, 5 + Math.random() * 4, -4), k * 450);
+        }
+        if (window.confetti) {
+          window.confetti({ particleCount: 220, spread: 120, origin: { y: 0.5 } });
+        }
+      }
+
+      renderChapterUI();
+    }
+
+    function openGiftBox() {
+      if (isBoxOpened) return;
+      playHapticClick();
+      isBoxOpened = true;
+      playMusicBoxNote(880, 1.6);
+
+      gsap.to(lidGroup.position, { y: 3.6, z: -1.6, duration: 1.6, ease: 'back.out(1.4)' });
+      gsap.to(lidGroup.rotation, { x: -Math.PI / 3, duration: 1.6, ease: 'power2.out' });
+
+      boxHeart.visible = true;
+      gsap.to(boxHeart.position, { y: 2.1, duration: 2.0, ease: 'elastic.out(1, 0.4)' });
+      gsap.to(boxHeart.scale, { x: 1.25, y: 1.25, z: 1.25, duration: 1.8, ease: 'back.out(2)' });
+
+      if (window.confetti) {
+        window.confetti({ particleCount: 130, spread: 75, origin: { y: 0.55 }, colors: ['#FFD166', '#F59E0B', '#F43F5E'] });
+      }
+      renderChapterUI();
+    }
+
+    function extinguishSingleCandle(idx) {
+      if (!candleFlames[idx] || candleFlames[idx].isExtinguished) return;
+      candleFlames[idx].isExtinguished = true;
+      playCandleBlow();
+
+      const cPos = candleFlames[idx].parent.position;
+      spawnSmoke(cPos);
+
+      gsap.to(candleFlames[idx].scale, {
+        x: 0.001, y: 0.001, z: 0.001, duration: 0.32,
+        onComplete: () => { candleFlames[idx].visible = false; }
+      });
+      if (candleLights[idx]) gsap.to(candleLights[idx], { intensity: 0, duration: 0.4 });
+
+      candlesExtinguished++;
+      renderChapterUI();
+
+      if (candlesExtinguished >= 5) {
+        setTimeout(() => {
+          playMusicBoxNote(880, 1.8);
+          if (window.confetti) {
+            window.confetti({ particleCount: 160, spread: 95, origin: { y: 0.6 } });
+          }
+          for (let i = 0; i < 4; i++) {
+            setTimeout(() => spawnFirework((Math.random() - 0.5) * 8, 4 + Math.random() * 3, -3), i * 350);
+          }
+        }, 500);
+      }
+    }
+
+    function extinguishAllCandles() {
+      playHapticClick();
+      candleFlames.forEach((_, idx) => {
+        setTimeout(() => extinguishSingleCandle(idx), idx * 120);
+      });
+    }
+
+    function openWish(idx) {
+      playHapticClick();
+      const card = WISH_CARDS[idx];
+      document.getElementById('wish-badge').textContent = card.badge;
+      document.getElementById('wish-title').textContent = card.title;
+      document.getElementById('wish-quote').textContent = `"${card.quote}"`;
+      document.getElementById('wish-message').textContent = card.message;
+      document.getElementById('wish-modal').classList.remove('hidden');
+      document.getElementById('wish-modal').classList.add('flex');
+      playMusicBoxNote(600 + idx * 80, 1.4);
+    }
+
+    function closeWish() {
+      playHapticClick();
+      document.getElementById('wish-modal').classList.add('hidden');
+      document.getElementById('wish-modal').classList.remove('flex');
+    }
+
+    function launchMoreFireworks() {
+      playHapticClick();
+      spawnFirework((Math.random() - 0.5) * 8, 4 + Math.random() * 3, -3);
+      if (window.confetti) window.confetti({ particleCount: 90, spread: 80 });
+    }
+
+    function captureSouvenir() {
+      playHapticClick();
+      const dataUrl = renderer.domElement.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.download = 'Shubhra_Birthday_Odyssey_Oct5.png';
+      a.href = dataUrl;
+      a.click();
+    }
+
+    // -------------------------------------------------------------
+    // Event Listeners & Animation Loop
+    // -------------------------------------------------------------
+    document.getElementById('start-btn').addEventListener('click', () => {
+      initAudio();
+      playHapticClick();
+      playMusicBoxNote(523.25, 1.2);
+      document.getElementById('welcome-overlay').style.display = 'none';
+      document.getElementById('main-hud').classList.remove('hidden');
+      document.getElementById('main-hud').classList.add('flex');
+      document.getElementById('bottom-card-container').classList.remove('hidden');
+      goToChapter(1);
+    });
+
+    document.getElementById('audio-toggle').addEventListener('click', toggleAudio);
+    document.getElementById('camera-btn').addEventListener('click', captureSouvenir);
+    document.getElementById('replay-btn').addEventListener('click', () => {
+      playHapticClick();
+      candlesExtinguished = 0;
+      isBoxOpened = false;
+      candleFlames.forEach((f, idx) => {
+        f.visible = true;
+        f.isExtinguished = false;
+        f.scale.set(1, 1, 1);
+        if (candleLights[idx]) candleLights[idx].intensity = 1.6;
+      });
+      goToChapter(1);
+    });
+
+    document.getElementById('close-wish-modal').addEventListener('click', closeWish);
+    document.getElementById('cherish-btn').addEventListener('click', closeWish);
+
+    const cursorEl = document.getElementById('custom-cursor');
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2(-10, -10);
+
+    window.addEventListener('mousemove', (e) => {
+      cursorEl.style.left = e.clientX + 'px';
+      cursorEl.style.top = e.clientY + 'px';
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      gsap.to(camera.position, {
+        x: mouse.x * 0.75,
+        y: 1.8 + mouse.y * 0.55,
+        duration: 1.6,
+        ease: 'power2.out'
+      });
+    });
+
+    window.addEventListener('pointerdown', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+
+      const flameMeshes = [];
+      candleFlames.forEach(fg => {
+        fg.traverse(child => {
+          if (child.isMesh) {
+            child.candleIndex = fg.candleIndex;
+            child.parentFlameGroup = fg;
+            flameMeshes.push(child);
+          }
+        });
+      });
+      const hitCandles = raycaster.intersectObjects(flameMeshes);
+      if (hitCandles.length > 0) {
+        const hit = hitCandles[0].object;
+        if (hit.parentFlameGroup && !hit.parentFlameGroup.isExtinguished) {
+          extinguishSingleCandle(hit.candleIndex);
+          return;
+        }
+      }
+
+      const hitOrbs = raycaster.intersectObjects(wishingOrbs);
+      if (hitOrbs.length > 0) {
+        openWish(hitOrbs[0].object.wishIndex);
+        return;
+      }
+
+      playHapticClick();
+      spawnFirework(mouse.x * 6, mouse.y * 5, -2 + Math.random() * 2);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 's' || e.key === 'S') {
+        playHapticClick();
+        spawnFirework((Math.random() - 0.5) * 8, 4 + Math.random() * 3, -3);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    });
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const elapsed = clock.getElapsedTime();
+
+      if (starfield) {
+        starfield.rotation.y = elapsed * 0.014;
+        starfield.rotation.x = elapsed * 0.005;
+      }
+
+      if (nebulaeGroup) {
+        nebulaeGroup.rotation.y = -elapsed * 0.006;
+      }
+
+      if (spikesGroup) {
+        spikesGroup.children.forEach((sp, i) => {
+          const pulse = sp.baseScale * (1 + Math.sin(elapsed * 2.5 + i * 1.5) * 0.18);
+          sp.scale.set(pulse, pulse, 1);
+        });
+      }
+
+      if (bokehDust) {
+        bokehDust.rotation.y = elapsed * 0.02;
+        bokehDust.rotation.x = Math.sin(elapsed * 0.1) * 0.05;
+      }
+
+      if (astrolabeGroup && astrolabeGroup.visible) {
+        chronoRing1.rotation.x += delta * 0.35;
+        chronoRing2.rotation.y += delta * 0.28;
+        chronoRing3.rotation.z += delta * 0.18;
+        constellationGroup.rotation.y = Math.sin(elapsed * 0.45) * 0.2;
+      }
+
+      if (giftGroup && giftGroup.visible) {
+        giftGroup.position.y = -0.2 + Math.sin(elapsed * 1.6) * 0.12;
+        giftGroup.rotation.y += delta * 0.38;
+        if (boxHeart && boxHeart.visible) {
+          boxHeart.rotation.y += delta * 1.1;
+          boxHeart.rotation.x += delta * 0.7;
+        }
+      }
+
+      if (cakeGroup && cakeGroup.visible) {
+        cakeGroup.rotation.y += delta * 0.1;
+        candleFlames.forEach((flameGroup, i) => {
+          if (!flameGroup.isExtinguished) {
+            const flicker = 1 + Math.sin(elapsed * 14 + i * 2.5) * 0.16;
+            const sway = Math.sin(elapsed * 8 + i * 1.8) * 0.06;
+            flameGroup.scale.set(flicker, flicker * 1.12, flicker);
+            flameGroup.rotation.z = sway;
+            if (candleLights[i]) {
+              candleLights[i].intensity = 1.3 + Math.sin(elapsed * 16 + i) * 0.35;
+            }
+          }
+        });
+      }
+
+      for (let s = smokeParticles.length - 1; s >= 0; s--) {
+        const item = smokeParticles[s];
+        item.age += delta;
+        const pos = item.system.geometry.attributes.position.array;
+        for (let k = 0; k < item.vels.length; k++) {
+          const vel = item.vels[k];
+          pos[k * 3] += vel.x + Math.sin(item.age * vel.curlFreq) * 0.004;
+          pos[k * 3 + 1] += vel.y;
+          pos[k * 3 + 2] += vel.z + Math.cos(item.age * vel.curlFreq) * 0.004;
+        }
+        item.system.geometry.attributes.position.needsUpdate = true;
+        item.system.material.opacity = Math.max(0, 0.75 - item.age / 1.6);
+        if (item.age > 1.6) {
+          scene.remove(item.system);
+          smokeParticles.splice(s, 1);
+        }
+      }
+
+      if (orbGroup) {
+        wishingOrbs.forEach((orb, i) => {
+          const angle = (i / WISH_CARDS.length) * Math.PI * 2 + elapsed * 0.24;
+          const radius = 5.4;
+          orb.position.x = Math.cos(angle) * radius;
+          orb.position.z = Math.sin(angle) * radius;
+          orb.position.y = 1.1 + Math.sin(elapsed * 1.8 + i) * 0.3;
+        });
+      }
+
+      for (let i = fireworks.length - 1; i >= 0; i--) {
+        const fw = fireworks[i];
+        fw.age += delta;
+        const positions = fw.system.geometry.attributes.position.array;
+        const vels = fw.velocities;
+
+        for (let j = 0; j < vels.length / 3; j++) {
+          positions[j * 3] += vels[j * 3];
+          positions[j * 3 + 1] += vels[j * 3 + 1];
+          positions[j * 3 + 2] += vels[j * 3 + 2];
+          vels[j * 3 + 1] -= delta * 0.09;
+        }
+        fw.system.geometry.attributes.position.needsUpdate = true;
+        fw.system.material.opacity = Math.max(0, 1 - fw.age / 1.8);
+
+        if (fw.age > 1.8) {
+          scene.remove(fw.system);
+          fireworks.splice(i, 1);
+        }
+      }
+
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
